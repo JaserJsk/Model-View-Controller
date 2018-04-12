@@ -1,0 +1,31 @@
+﻿@model IEnumerable<MvcMedEntityFramework.Data.Address>
+
+@{
+    var options = new AjaxOptions
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "listOfAddresses",
+        InsertionMode = InsertionMode.Replace,
+        OnBegin = "showLoadingIndicator",
+        OnComplete = "hideLoadingIndicator"
+    };
+}
+
+@foreach (var address in Model)
+{
+    <div>
+        <h3>@address.StreetName</h3>
+        <h4>@address.StreetNumber</h4>
+    
+        @using (Ajax.BeginForm("Delete", options))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.Hidden("id", address.Id)
+
+            <input type="submit" value="Ta bort"/>   
+        }
+
+        @Ajax.ActionLink("Ta bort", "Delete", new { id = address.Id }, options)
+    </div>
+}

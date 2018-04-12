@@ -1,0 +1,15 @@
+﻿@model IList<MvcChat.Models.MessageModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Messages</h2>
+
+@foreach (var message in Model)
+{
+    <div>
+        <h1>@message.User</h1>
+        @message.Message
+    </div>
+}

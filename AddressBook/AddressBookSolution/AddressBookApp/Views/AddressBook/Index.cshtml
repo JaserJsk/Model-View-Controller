@@ -1,0 +1,107 @@
+﻿@model IEnumerable<AddressBookApp.Models.AddressBook.AddressBook>
+
+@{
+    ViewBag.Title = "Address Book";
+}
+
+@* all styles used is put in external css file, load it before dom elements *@
+@Styles.Render("~/Content/addressBook.css")
+
+
+@* very top level content holder of entire page *@
+@Html.Raw("<div id='address-container'>")
+@Html.Raw("<h2>Address Book</h2>")
+
+@* divide page into two columns; first - loader icon used in ajax; second - add address button *@
+@Html.Raw("<div class='row'>")
+@Html.Raw("<div class='col-md-6'>")
+@Html.Raw("<img id='loading-gif' src='/Images/icons/box.gif' />")
+@Html.Raw("</div>")
+@Html.Raw("<div class='col-md-6'>")
+@Html.Raw("<div class='text-right'>")
+@Html.Raw("<a href='#' class='btn btn-primary' id='btnAddAddress'>")
+@* add address button has icon inside it *@
+@Html.Raw("<span class='glyphicon glyphicon-plus'></span>")
+@Html.Raw("Add")
+@Html.Raw("</a>")
+@Html.Raw("</div>")
+@Html.Raw("</div>")
+@Html.Raw("</div>")
+
+@* wrapper of all address items that will be shown *@
+@* this is used when we want to add more address item in list *@
+@Html.Raw("<div id='address-panel'>")
+
+@* check if there are any items or if its blank show appropriate message *@
+@if (Model.ToList().Count > 0)
+{
+    foreach (var item in Model)
+    {
+        // Open another cshtml view and pass model to render it
+        @Html.Partial("_AddressItem", item);
+    }
+}
+else
+{
+    // When no address items show some message to user
+    @Html.Raw("<i class='text-center color-secondary'>Add Address</i>")
+}
+
+
+@Html.Raw("</div>")
+@Html.Raw("</div>")
+
+<!-- Modal -->
+@* COMMON MODAL - USED IN ADD & EDIT MODE WITH TOGGLING BUTTONS/HEADING *@
+@Html.Raw("<div id='addAddressModal' class='modal fade' role='dialog'>")
+@Html.Raw("<div class='modal-dialog'>")
+
+<!-- Modal content-->
+@Html.Raw("<div class='modal-content'>")
+@Html.Raw("<div class='modal-header'>")
+@* X mark shown to close mdoal *@
+@Html.Raw("<button type='button' class='close' data-dismiss='modal'>&times;</button>")
+
+@* Heading to show on Add mode *@
+@Html.Raw("<h4 class='modal-title' id='modalTitleAdd'>Add Address</h4>")
+
+@* Heading to show on Update mode *@
+@Html.Raw("<h4 class='modal-title' id='modalTitleUpdate'>Update Address</h4>")
+@Html.Raw("</div>")
+@Html.Raw("<div class='modal-body'>")
+@Html.Raw("<div class='form-group'>")
+
+@* Name *@
+@Html.Raw("<label>Name*</label>")
+@Html.Raw("<input id='txtName' required type='text' class='form-control' placeholder='Name' />")
+@Html.Raw("</div>")
+
+@* Address *@
+@Html.Raw("<div class='form-group'>")
+@Html.Raw("<label>Address*</label>")
+@Html.Raw("<textarea rows='3' required id='txtAddress' class='form-control' placeholder='Address'></textarea>")
+@Html.Raw("</div>")
+
+@* Phone number *@
+@Html.Raw("<div class='form-group'>")
+@Html.Raw("<label>Phone</label>")
+@Html.Raw("<input type='text' required id='txtPhone' class='form-control' placeholder='Phone' />")
+@Html.Raw("</div>")
+
+@Html.Raw("</div>")
+@Html.Raw("<div class='modal-footer'>")
+@* Modal cancel button, add button, update button *@
+@Html.Raw("<button type='button' class='btn btn-default' data-dismiss='modal'>Cancel</button>")
+@Html.Raw("<button type='button' id='btnUpdateSubmit' class='btn btn-success'>Update</button>")
+@Html.Raw("<button type='button' id='btnAddSubmit' class='btn btn-success'>Save</button>")
+@Html.Raw("</div>")
+@Html.Raw("</div>")
+
+@Html.Raw("</div>")
+@Html.Raw("</div>")
+
+
+@* Load script file now *@
+@section scripts{
+    @Scripts.Render("~/Scripts/pages/address.js")
+}

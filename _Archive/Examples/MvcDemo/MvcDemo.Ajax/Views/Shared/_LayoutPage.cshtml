@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+<div>
+    @* (Detta är en kommentar i Razor)
+
+        RenderBody kommer att rendera innehållet i den vy som returnerats
+        av den action som körs, om den returnerar med View()
+        Tänk på att denna filen INTE körs när man anropar PartialView()
+        från en Action.
+    *@
+
+    @RenderBody()
+</div>
+
+@*
+    Vi inkluderar jQuery och vårt eget JavaScript längst ner
+*@
+    <script src="/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="/Scripts/main.js"></script>
+</body>
+</html>

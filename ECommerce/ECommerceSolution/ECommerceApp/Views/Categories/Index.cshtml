@@ -1,0 +1,68 @@
+﻿@model IEnumerable<ECommerceApp.Core.Models.Category>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Categories</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="#">Home</a>
+            </li>
+            <li class="active">
+                <strong>Categories</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div style="margin-top: 19px">
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-outline btn-primary" })
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3">
+
+                <div class="ibox">
+
+                    <div class="ibox-content product-box">
+
+                        <div class="product-desc">
+
+                            <small class="text-muted">
+                                @Html.DisplayFor(modelItem => item.Catalog.CatalogName)
+                            </small>
+
+                            <a href="#" class="product-name">
+                                @Html.DisplayFor(modelItem => item.CategoryName)
+                            </a>
+
+                            <div class="small m-t-xs">
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </div>
+
+                            <div class="m-t text-right">
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-xs btn-outline btn-info" })
+                                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-xs btn-outline btn-primary" })
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-xs btn-outline btn-danger" })
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+</div>

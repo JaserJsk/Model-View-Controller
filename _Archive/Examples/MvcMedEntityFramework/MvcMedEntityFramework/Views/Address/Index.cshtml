@@ -1,0 +1,14 @@
+﻿@model IEnumerable<MvcMedEntityFramework.Data.Address>
+
+<h2>Create Address</h2>
+
+
+@{
+    Html.RenderAction("Create");
+}
+
+<h2>Addresses</h2>
+
+<div id="listOfAddresses">
+    @Html.Partial("List")
+</div>

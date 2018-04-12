@@ -1,0 +1,39 @@
+﻿@model MvcDemo.Ajax.Models.PhotoViewModel
+
+@{
+    ViewBag.Title = "Ladda upp en ny bild";
+
+    // Vi tar en PhotoViewModel som Model här
+    // Detta för att vi ska kunna använda Html Helpers som
+    // Arbetar direkt mot vår modell
+}
+
+<h3>Ladda upp en ny bild</h3>
+
+@using (Html.BeginForm("Upload", "Gallery", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    @* (Detta är en kommentar i Razor)
+
+        Att använda Html.BeginForm är precis samma som att skriva
+        <form action="/Gallery/Upload" method="post"></form>
+
+        Sätter man inte enctype till multipart/form-data så kan man INTE ladda upp filer!
+    *@
+
+    @*
+        Blev det något fel? Då säger vi det till användaren!
+    *@
+
+    <div>
+        @Html.ValidationMessage("error")
+    </div>
+
+    @Html.TextBoxFor(photo => photo.Name)
+
+    <input type="file" name="file" />
+
+    <input type="submit" value="Ladda upp" />
+}
+
+<div id="result"></div>

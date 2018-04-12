@@ -1,0 +1,44 @@
+﻿@model AddressBookApp.Models.AddressBook.AddressBook
+
+@{
+    Layout = null;
+}
+
+@* We want to re-use entire address item view several times so making it as separate view *@
+@* This is partial view and model needs to be passed for it to work *@
+
+@* Address item block is divided in 3 columns *@
+@Html.Raw("<div class='row address-item' id=" + @Html.DisplayFor(modelItem => modelItem.ID) + ">")
+@Html.Raw("<div class='col-md-8'>")
+@Html.Raw("<div class='heading'>")
+
+@* Left column with name, address, phone *@
+@Html.DisplayFor(modelItem => modelItem.Name)
+@Html.Raw("</div>")
+@Html.Raw("<div class='address'>")
+@Html.DisplayFor(modelItem => modelItem.Address)
+@Html.Raw("<br />")
+@Html.Raw("<span class='glyphicon glyphicon-phone-alt phone'></span>")
+@Html.DisplayFor(modelItem => modelItem.PhoneNumber)
+@Html.Raw("<br />")
+@Html.Raw("<div class='address-id'>ID: " + @Html.DisplayFor(modelItem => modelItem.ID) +  "</div>")
+@Html.Raw("</div>")
+@Html.Raw("</div>")
+
+@* Right mid column to show date *@
+@Html.Raw("<div class='col-md-2'>")
+@Html.Raw("<div class='date'>")
+@Html.DisplayFor(modelItem => modelItem.UpdateDate)
+@Html.Raw("</div>")
+@Html.Raw("</div>")
+
+@* Right most column to show edit and delete button *@
+@Html.Raw("<div class='col-md-2 text-right'>")
+@Html.Raw("<a href='#' data-id=" + @Html.DisplayFor(modelItem => modelItem.ID) + " class='btn btn-default btnEdit'>")
+@Html.Raw("<span class='glyphicon glyphicon-edit'></span>")
+@Html.Raw("</a>")
+@Html.Raw("<a href='#' data-id=" + @Html.DisplayFor(modelItem => modelItem.ID) + " class='btn btn-default btnRemove'>")
+@Html.Raw("<span class='glyphicon glyphicon-remove'></span>")
+@Html.Raw("</a>")
+@Html.Raw("</div>")
+@Html.Raw("</div>")

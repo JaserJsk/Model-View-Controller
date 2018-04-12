@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <script src="Scripts/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript">
+        setInterval(function() {
+            $.get("http://localhost:4052/Message/List", function (data) {
+                $("#messages").html("");
+
+                $.each(data, function (index, element) {
+
+                    var date = new Date(parseInt(element.Sent.substr(6)));
+
+                    $("#messages").append('<h1>' +
+                        element.User + ' (' + date + ')' + '</h1>');
+
+                    $("#messages").append(element.Message);
+                });
+            });
+
+        }, 500);
+
+        $(document).ready(function () {
+            $('#submit').click(function(e) {
+                e.preventDefault();
+
+                var model = {
+                    message: $("#message").val(),
+                    user: $("#user").val()
+                };
+
+                $.post("http://localhost:4052/Message/Add",
+                    model,
+                    function() {});
+            });
+         });
+    </script>
+</head>
+<body>
+    <div id="addMessage">
+        <form>
+            Message: <input id="message" type="text" />
+            Username: <input id="user" type="text" />
+            <input type="button" id="submit" value="Add" />
+        </form>
+    </div>
+    <div id="messages"></div>
+</body>
+</html>

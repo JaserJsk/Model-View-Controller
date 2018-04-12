@@ -1,0 +1,141 @@
+﻿@model ECommerceApp.Core.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Details</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="#">Home</a>
+            </li>
+            <li>
+                <a href="#">Products</a>
+            </li>
+            <li class="active">
+                <strong>Details</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+    <div class="row">
+
+        <div class="col-lg-12">
+
+            <div class="ibox product-detail">
+
+                <div class="ibox-content">
+
+                    <div class="row">
+
+                        <!-- ---------------------------------------------------------------------------------------------- -->
+                        <div class="col-md-5">
+                            <div class="product-images">
+                                <div>
+                                    <div class="image-imitation">
+                                        [IMAGE 1]
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="image-imitation">
+                                        [IMAGE 2]
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="image-imitation">
+                                        [IMAGE 3]
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ---------------------------------------------------------------------------------------------- -->
+                        <div class="col-md-7">
+
+                            <h3 class="font-bold m-b-xs">
+                                @Html.DisplayFor(model => model.Article)
+                            </h3>
+
+                            <h2 class="font-bold m-b-xs">
+                                @Html.DisplayFor(model => model.ProductName)
+                            </h2>
+
+                            <hr>
+
+                            <div>
+                                <button class="btn btn-primary pull-right">Add to cart</button>
+                                <h2 class="product-main-price">
+                                    $@Html.DisplayFor(model => model.Price)
+                                    <small class="text-muted">Excluding Tax</small>
+                                </h2>
+                                <h1 class="product-main-price">
+                                    $@Html.DisplayFor(model => model.PriceWithTax)
+                                    <small class="text-muted">Including Tax</small>
+                                </h1>
+                            </div>
+
+                            <hr>
+
+                            <h4>@Html.DisplayNameFor(model => model.Description)</h4>
+
+                            <div class="small text-muted">
+                                @Html.DisplayFor(model => model.Description)
+                            </div>
+
+                            <hr>
+
+                            <div class="text-right">
+                                <div class="btn-group">
+                                    <button class="btn btn-white btn-sm"><i class="fa fa-star"></i> Add to wishlist </button>
+                                    <button class="btn btn-white btn-sm"><i class="fa fa-envelope"></i> Contact with author </button>
+                                    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-xs btn-outline btn-info edit-btn" })
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-outline btn-warning" })
+
+@section Styles {
+    @Styles.Render("~/plugins/slickStyles")
+    @Styles.Render("~/plugins/slickThemeStyles")
+
+    <style>
+        .edit-btn {
+            height: 30px;
+            padding-top: 5px !important;
+        }
+    </style>
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/slick")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.product-images').slick({
+                dots: true
+            });
+
+        });
+    </script>
+}

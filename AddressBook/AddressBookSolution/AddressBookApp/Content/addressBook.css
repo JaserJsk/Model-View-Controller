@@ -1,0 +1,37 @@
+﻿
+/* address container with reduced with, adjustable to needs */
+#address-container {
+    width: 900px;
+    margin: auto;
+}
+
+/* loading gif icon used when ajax is in progress state */
+#loading-gif {
+    height: 32px;
+    display: none;
+}
+
+/* each address item is decorated with white background and some shadow around corners */
+.address-item {
+    background-color: #fff;
+    margin: 1em 0;
+    padding: 10px;
+    box-shadow: 0 0 3px #ccc;
+    line-height: 1.8;
+}
+
+    /* provided some spacing to telephone icon inside address item */
+    .address-item .phone {
+        margin-right: 8px;
+    }
+
+    /* add boldness to heading of address item */
+    .address-item .heading {
+        font-weight: bold;
+        font-size: 1.3em;
+    }
+
+    /* address item date on right, added some spacing to align properly */
+    .address-item .date {
+        padding-top: 5px;
+    }
