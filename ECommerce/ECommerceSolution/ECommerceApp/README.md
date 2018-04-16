@@ -150,7 +150,7 @@ public ActionResult DeleteConfirmed(Guid id)
     db.SaveChanges();
     return RedirectToAction("Index");
 }
-``
+```
 
 ***
 
@@ -224,4 +224,4 @@ public ActionResult DeleteConfirmed(Guid id)
     db.SaveChanges();
     return RedirectToAction("Index");
 }
-``
+```
