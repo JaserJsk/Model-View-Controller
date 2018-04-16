@@ -1,104 +1,121 @@
 
-First make sure that the correct ```data source & initial catalog``` is configured.
+The following code creates the catalog entities.
 
-``` Web.config
-<connectionStrings>
-    <add name="AddressBookDBConnectionString" connectionString="data source=DESKTOP-LM7PGQ6; initial catalog=AddressBookDB; 
-    integrated security=SSPI" providerName="System.Data.SqlClient" />
-</connectionStrings>
+``` Catalog.cs 
+public Guid Id { get; set; }
+​
+[Required]
+[MaxLength(100)]
+public string CatalogName { get; set; }
+​
+[Required]
+[DataType(DataType.MultilineText)]
+public string Description { get; set; }
+​
+public virtual ICollection<Category> Categories { get; set; }
 ```
 
-Here I add all fields to be saved in the database.
+This interface class contains all the methods for CRUD operations.
 
-``` AddressBook.cs 
-public class AddressBook
-{
-    // unique row id, primary key
-    public Guid ID { get; set; }
-    // name
-    public String Name { get; set; }
-    // phone number
-    public String PhoneNumber { get; set; }
-    // address, could be multiple line
-    public String Address { get; set; }
-    // add created date
-    public DateTime CreateDate { get; set; }
-    // update date, keeps changing when update is done
-    public DateTime UpdateDate { get; set; }
-}
+``` ICatalogRepository.cs 
+void AddCatalog(string name , string description);
+​
+void UpdateCatalog(Guid Id, Catalog ca);
+​
+Catalog FindById(Guid Id);
+​
+void RemoveCatalog(Guid Id);
+​
+IEnumerable GetCatalogs();
 ```
 
-The following code adds new contact to the address book.
+***
 
-``` AddressBookController.cs
-public ActionResult AddAddress(AddressBook addressBook)
+The following code creates the category entities.
+
+``` Category.cs 
+public Guid Id { get; set; }
+​
+[Required]
+[MaxLength(100)]
+public string CategoryName { get; set; }
+​
+[Required]
+[DataType(DataType.MultilineText)]
+public string Description { get; set; }
+​
+[ForeignKey("Catalog")]
+public Guid CatalogId { get; set; }
+​
+public virtual Catalog Catalog { get; set; }
+​
+public virtual ICollection<Product> Products { get; set; }
+```
+
+This interface class contains all the methods for CRUD operations.
+
+``` ICategoryRepository.cs 
+void AddCategory(string name , string description);
+​
+void UpdateCategory(Guid Id, Category ca);
+​
+Category FindById(Guid Id);
+​
+void RemoveCategory(Guid Id);
+​
+IEnumerable GetCategories();
+```
+
+***
+
+The following code creates the product entities.
+
+``` Category.cs 
+public Guid Id { get; set; }
+​
+[Required]
+public string Article { get; set; }
+​
+[Required]
+[MaxLength(100)]
+public string ProductName { get; set; }
+​
+[Required]
+[DataType(DataType.MultilineText)]
+public string Description { get; set; }
+​
+[Required]
+public decimal Price { get; set; }
+​
+public decimal PriceWithTax
 {
-    AddressBookContext aContext = new AddressBookContext();
-    
-    // Create new instance of address book or can use same as parameter instance
-    AddressBook aBook = new AddressBook()
+    get
     {
-        // Generate new guid or so called ID
-        ID = Guid.NewGuid(),
-        Name = addressBook.Name,
-        PhoneNumber = addressBook.PhoneNumber,
-        Address = addressBook.Address,
-        CreateDate = DateTime.UtcNow,
-        UpdateDate = DateTime.UtcNow
-    };
-​
-    aContext.AddressBook.Add(aBook);
-​
-    // Save changes to database
-    aContext.SaveChanges();
-​
-    // Return partial view; Send data along with view name so that view binds with this data and results are sent in ajax
-    return PartialView("_AddressItem", aBook);
+        return Price * 1.125m;
+    }
 }
+​
+[Required]
+public bool InStock { get; set; }
+​
+[ForeignKey("Category")]
+public Guid CategoryId { get; set; }
+​
+public virtual Category Category { get; set; }
+​
+public virtual ICollection<File> Files { get; set; }
 ```
 
-The code below updates an existing contact in the Address Book.
+This interface class contains all the methods for CRUD operations.
 
-``` AddressBookController.cs
-public ActionResult UpdateAddress(AddressBook addressBook)
-{
-    AddressBookContext aContext = new AddressBookContext();
+``` ICategoryRepository.cs 
+void AddProduct(string article , string name , string description , decimal price , bool instock);
 ​
-    // Get that addressbook item which got modified
-    var targetAddress = aContext.AddressBook.Where(r => r.ID == addressBook.ID).FirstOrDefault();
+void UpdateProduct(Guid Id , Product pr);
 ​
-    // Update could be any of below attribute so reassign every attribute
-    targetAddress.Name = addressBook.Name;
-    targetAddress.Address = addressBook.Address;
-    targetAddress.PhoneNumber = addressBook.PhoneNumber;
-    targetAddress.UpdateDate = DateTime.UtcNow;
+Product FindById(Guid Id);
 ​
-    // Save changes to db
-    aContext.SaveChanges();
+void RemoveProduct(Guid Id);
 ​
-    // Return partial view with model bind; view with new updated data will be sent in ajax response
-    return PartialView("_AddressItem", targetAddress);
-}
-```
-
-The code below deletes an existing contact from the address book.
-
-``` AddressBookController.cs
-public JsonResult DeleteAddress(Guid addressID)
-{
-    if (addressID == Guid.Empty) return Json("");
-​
-    AddressBookContext aContext = new AddressBookContext();
-​
-    // Search and get item we want to remove
-    var targetAddress = aContext.AddressBook.Where(r => r.ID == addressID).FirstOrDefault();
-​
-    aContext.AddressBook.Remove(targetAddress);
-​
-    // Change in db
-    aContext.SaveChanges();
-​
-    // Simply return success in ajax response
-    return Json("success");
-}
+IEnumerable GetProducts();
 ```
