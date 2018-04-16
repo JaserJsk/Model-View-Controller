@@ -31,6 +31,5 @@ namespace ECommerceApp.Infrastructure.DataContext
         public virtual DbSet<Product> Products { get; set; }
 
         public virtual DbSet<File> Files { get; set; }
-
     }
 }

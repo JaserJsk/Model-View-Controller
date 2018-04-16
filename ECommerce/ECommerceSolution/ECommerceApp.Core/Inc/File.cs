@@ -30,6 +30,5 @@ namespace ECommerceApp.Core.Inc
         public FileType FileType { get; set; }
 
         public virtual Product Product { get; set; }
-
     }
 }

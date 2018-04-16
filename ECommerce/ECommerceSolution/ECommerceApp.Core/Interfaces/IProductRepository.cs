@@ -19,6 +19,5 @@ namespace ECommerceApp.Core.Interfaces
         void RemoveProduct(Guid Id);
 
         IEnumerable GetProducts();
-
     }
 }
